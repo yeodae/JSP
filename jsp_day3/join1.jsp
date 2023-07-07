@@ -1,0 +1,22 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="utf-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<form action="join_update.jsp" method="post">
+	<div> ID : <input type="text" name = "id">
+	</div>
+	<div> PW : <input type="password" name = "pwd">
+	</div>
+	<div> 나이 : <input type="text" name = "age">
+	</div>
+	<div><input type = "submit" value = "회원가입"></div>
+	
+	</form>
+</body>
+</html>
