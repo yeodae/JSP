@@ -54,6 +54,7 @@
 					String sql = "INSERT INTO STUDENT(STU_NO) VALUES('"+stuNo+"')";
 					stmt.executeUpdate(sql);
 					out.println("삽입 되었습니다.");
+					
 				}
 				//삽입을 하면 1이 넘어오고 아니면 0이 넘어옴
 			}else if(kind.equals("remove")){

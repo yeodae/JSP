@@ -15,17 +15,22 @@
 	
 	<%
 	 
-	
+	try{
 	Statement stmt = conn.createStatement();
 	ResultSet srs = stmt.executeQuery("select * from student");
 	
-	String no = request.getParameter("stu_Name");
-	String name = request.getParameter("stu_Dept");
-	String dept = request.getParameter("stu_Gread");
-	String gread = request.getParameter("stu_Height");
+	String stuName = request.getParameter("stu_Name");
+	String stuDept = request.getParameter("stu_Dept");
+	String stuGrade = request.getParameter("stu_Gread");
+	String stuHeight = request.getParameter("stu_Height");
 	
-	stmt.executeUpdate("insert into student (stu_Name, stu_Dept, stu_Gread, stu_Grade)values(no, name, dept, gread);");
+	String update = "UPDATE STUDENT SET STU_HEIGHT ='" + stuHeight + "', STU_DEPT = '" + stuDept + "', STU_GRADE = '" + stuGrade + "' WHERE STU_NO = " + stuName;
+	stmt.executeUpdate(update);
+	out.println("STUDENT 테이블 업데이트 성공했습니다.");
+	
+	}catch(SQLException e){
+		out.println(e.getMessage());
+	}
 	%>
-</form>
 </body>
 </html>
