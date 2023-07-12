@@ -18,13 +18,10 @@
 		
 		try {
 			stmt = conn.createStatement();
-			String update = "UPDATE TBL_USER SET BANYN = '" + kind + "' WHERE U_ID = '" + uId + "'";
+			String update = "UPDATE TBL_USER SET CNT = 0 WHERE U_ID = '" + uId + "'";
 			stmt.executeUpdate(update);
-			if(kind.equals("Y")){
-				out.println("정지되었습니다.");
-			} else {
-				out.println("해제되었습니다.");
-			}
+			out.println("초기화되었습니다.");
+			
 			
 			
 		} catch (SQLException ex) {

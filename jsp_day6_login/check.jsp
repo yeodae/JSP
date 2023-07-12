@@ -8,7 +8,6 @@
 </head>
 <body>
 	<%@ include file="../jdbc_set.jsp" %>
-	
 <form name="check">
 	<%
 		String uId = request.getParameter("uId");
@@ -23,18 +22,37 @@
 			String sql = "SELECT * FROM TBL_USER WHERE U_ID = '" + uId + "' AND PWD = '" + pwd + "' AND STATUS = '" + stat + "'";
 			rs = stmt.executeQuery(sql);
 			if(rs.next()){
-				session.setAttribute("userId", uId);
-				session.setAttribute("userName", rs.getString("U_NAME"));
-				session.setAttribute("status", rs.getString("STATUS"));
-				if(stat.equals("A")){
-					response.sendRedirect("user.jsp");
-				}else{
-					response.sendRedirect("main.jsp");
+				// 사용자 정지 여부
+				if(rs.getString("BANYN").equals("Y")){
+					out.println("정지된 회원입니다. 매너 지키세요");
+				} else if(rs.getInt("CNT") >= 5){ // 5번 이상 실패
+					out.println("비밀번호 5번 이상 실패! 관리자 한테 문의하셈");
+				} else {
+					session.setAttribute("userId", uId);
+					session.setAttribute("userName", rs.getString("U_NAME"));
+					session.setAttribute("status", rs.getString("STATUS"));
+					// 로그인 시도 횟수 초기화
+					String update = "UPDATE TBL_USER SET CNT = 0 WHERE U_ID = '" + uId + "'";
+					stmt.executeUpdate(update);
+					if(stat.equals("A")){ // 관리자
+						response.sendRedirect("user.jsp");
+					} else { // 일반 사용자
+						response.sendRedirect("main.jsp");
+					}
 				}
 			} else {
-				response.sendRedirect("find.jsp");
+				sql = "SELECT * FROM TBL_USER WHERE U_ID = '" + uId + "'";
+				rs = stmt.executeQuery(sql);
+				if(rs.next()){
+					if(rs.getInt("CNT") >= 5){ // 5번 이상 실패
+						out.println("비밀번호 5번 이상 실패! 관리자 한테 문의하셈");
+					} else {
+						String update = "UPDATE TBL_USER SET CNT = CNT + 1 WHERE U_ID = '" + uId + "'";
+						stmt.executeUpdate(update);
+						response.sendRedirect("find.jsp");
+					}
+				}
 			}
-				
 		}catch(SQLException e){
 			out.println(e.getMessage());
 		}
@@ -43,3 +61,8 @@
 </form>
 </body>
 </html>
+<script>
+	function back(){
+		location.href="login.jsp";
+	}
+</script>
