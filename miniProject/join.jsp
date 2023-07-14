@@ -14,7 +14,6 @@
 		<div>보호자이름 : <input type="text" name="uName"></div>
 		<div>연락처 : <input type="text" name="phone"></div>
 		<div>반려동물명 : <input type="text" name="pName"></div>
-		<div>종류 : <input type="text" name="pType"></div>
 		<div>특이사항 : <input type="text" name="memo"></div>
 		<div><input type="button" onclick="userJoin()" value="회원가입"></div>
 	</form>

@@ -34,12 +34,13 @@
 		<%
 			ResultSet rs = null;
 			Statement stmt = null;
+			String uId = request.getParameter("uId");
 			try {
-				String sql = "select * FROM YEO_TBL_USER Y INNER JOIN YEO_TBL_GUARDIAN G ON Y.U_NAME = G.U_NAME INNER JOIN YEO_TBL_PET P ON Y.PET_NAME = P.PET_NAME WHERE STATUS = 'U' ORDER BY U_ID ASC";
+				String sql = "select * FROM YEO_TBL_USER Y INNER JOIN YEO_TBL_GUARDIAN G ON Y.U_NAME = G.U_NAME INNER JOIN YEO_TBL_PET P ON Y.PET_NAME = P.PET_NAME WHERE STATUS = 'U' AND U_ID = '"+uId+"' ORDER BY U_ID ASC";
 				stmt = conn.createStatement();
 				rs = stmt.executeQuery(sql);
 				while (rs.next()) {
-					String uId = rs.getString("U_ID"); 
+					uId = rs.getString("U_ID"); 
 					String pw = rs.getString("U_PW");
 					String uName = rs.getString("U_NAME");
 					String phone 
@@ -102,13 +103,15 @@
 			
 		</tr>
 		<%
-			
+	
+			/* String uId = request.getParameter("uId");
+			out.println(uId); */
 			try {
-				String sql = "select * FROM YEO_TBL_USER Y INNER JOIN YEO_TBL_GUARDIAN G ON Y.U_NAME = G.U_NAME INNER JOIN YEO_TBL_PET P ON Y.PET_NAME = P.PET_NAME WHERE STATUS = 'U' ORDER BY U_ID ASC";
+				String sql = "select * FROM YEO_TBL_USER Y INNER JOIN YEO_TBL_GUARDIAN G ON Y.U_NAME = G.U_NAME INNER JOIN YEO_TBL_PET P ON Y.PET_NAME = P.PET_NAME WHERE STATUS = 'U' AND U_ID = '"+uId+"'";
 				stmt = conn.createStatement();
 				rs = stmt.executeQuery(sql);
 				while (rs.next()) {
-					String uId = rs.getString("U_ID"); 
+					uId = rs.getString("U_ID");
 					String pw = rs.getString("U_PW");
 					String uName = rs.getString("U_NAME");
 					String phone 

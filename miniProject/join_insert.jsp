@@ -15,7 +15,6 @@
 		String uName = request.getParameter("uName");
 		String phone = request.getParameter("phone");
 		String pName = request.getParameter("pName");
-		String pType = request.getParameter("pType");
 		String memo = request.getParameter("memo");
 		
 		ResultSet rs = null; // 검색 결과를 담기 위한 객체
@@ -23,11 +22,10 @@
 		
 		try{
 			stmt = conn.createStatement();
-			String sql = "INSERT INTO YEO_TBL_USER (U_ID,U_PW,U_NAME,PHONE,PET_TYPE,PET_NAME,MEMO) VALUES('"+ uId +
+			String sql = "INSERT INTO YEO_TBL_USER VALUES('"+ uId +
 					"', '" + pwd +
 					"', '" + uName +
 					"', '" + phone +
-					"', '" + pType +
 					"', '" + pName +
 					"', '"+ memo +"')";
 			

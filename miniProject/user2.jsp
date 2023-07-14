@@ -38,12 +38,14 @@
 		<%
 			ResultSet rs = null;
 			Statement stmt = null;
+			
+			String uId = request.getParameter("uId");
 			try {
 				String sql = "select * from YEO_TBL_USER WHERE STATUS = 'U' ORDER BY U_ID ASC";
 				stmt = conn.createStatement();
 				rs = stmt.executeQuery(sql);
 				while (rs.next()) {
-					String uId = rs.getString("U_ID"); 
+					uId = rs.getString("U_ID"); 
 					String pw = rs.getString("U_PW");
 					String uName = rs.getString("U_NAME");
 					String phone 
@@ -60,7 +62,7 @@
 						= rs.getString("BANYN").equals("Y") ? "정지" : "";
 					String btnYn
 						= rs.getString("BANYN").equals("Y") ? "해제" : "정지";
-					int cnt = rs.getInt("CNT"); 
+					int cnt = rs.getInt("CNT") != 0 ? rs.getInt("CNT") : 0;    
 					String memo
 						= rs.getString("MEMO") != null ? rs.getString("MEMO") : "공백";
 		%>
