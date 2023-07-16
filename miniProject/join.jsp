@@ -8,13 +8,19 @@
 </head>
 <body>
 	<form action="join_insert.jsp" name = "userForm" method="post">
-		<div>아이디 : <input type="text" name="uId"><input type="button" onclick="idCheck();" value="중복체크"></div>
-		<div>패스워드 : <input type="password" name="pwd1"></div>
+		<div>아이디 : <input type="text" name="uId" placeholder="영문+숫자 조합"><input type="button" onclick="idCheck();" value="중복체크" ></div>
+		<div>패스워드 : <input type="password" name="pwd1" placeholder="4자리 이상"></div>
 		<div>패스워드 확인 : <input type="password" name="pwd2"></div>
 		<div>보호자이름 : <input type="text" name="uName"></div>
 		<div>연락처 : <input type="text" name="phone"></div>
 		<div>반려동물명 : <input type="text" name="pName"></div>
-		<div>특이사항 : <input type="text" name="memo"></div>
+		<div>반려동물종류 : <select name="pType">
+			<option>강아지</option>
+			<option>고양이</option>
+		</select></div>
+		<div>특이사항 : <input type="text" name="memo" placeholder="심장병/입질/슬개골수술"></div>
+		<div>이벤트 수신여부 : 수신허용<input type="radio" name="evt" value="Y">
+				수신거부<input type="radio" name="evt" value="N"></div>
 		<div><input type="button" onclick="userJoin()" value="회원가입"></div>
 	</form>
 </body>
@@ -35,6 +41,12 @@
 		var regType1 = /^[A-Za-z0-9]+$/;
 		if(!regType1.test(form.uId.value) ){
 			alert("아이디는 영문, 숫자의 조합으로 가능합니다.");
+			form.uId.select();
+			return;
+		}
+		if(form.pwd1.value.length <= 4){
+			alert("비밀번호는 4자리 이상 입력해주세요.");
+			form.pwd1.select();
 			return;
 		}
 		if(form.pwd1.value != form.pwd2.value){
@@ -48,17 +60,22 @@
 		}
 		if(form.pwd1.value == "" || form.pwd1.value == undefined){
 			alert("패스워드는 필수 값 입니다.");
-			form.uId.focus();
+			form.pwd1.focus();
 			return;
 		}
 		if(form.uName.value == "" || form.uName.value == undefined){
 			alert("보호자명은 필수 값 입니다.");
-			form.uId.focus();
+			form.uName.focus();
+			return;
+		}
+		if(form.phone.value == "" || form.phone.value == undefined){
+			alert("연락처는 필수 값 입니다.");
+			form.phone.focus();
 			return;
 		}
 		if(form.pName.value == "" || form.pName.value == undefined){
 			alert("강아지명은 필수 값 입니다.");
-			form.uId.focus();
+			form.pName.focus();
 			return;
 		}
 		form.submit();

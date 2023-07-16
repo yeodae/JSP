@@ -10,7 +10,7 @@
 <%@ include file="../jsp_heid_set.jsp" %>
 <form name="check">
 	<%
-		String uId = request.getParameter("uId");
+		String uName = request.getParameter("uName");
 		String kind = request.getParameter("kind");
 		
 		ResultSet rs = null; // 검색 결과를 담기 위한 객체
@@ -18,12 +18,12 @@
 		
 		try {
 			stmt = conn.createStatement();
-			String update = "UPDATE YEO_TBL_USER SET BANYN = '" + kind + "' WHERE U_ID = '" + uId + "'";
+			String update = "UPDATE YEO_TBL_GUARDIAN SET EVENT = '" + kind + "' WHERE U_NAME = '" + uName + "'";
 			stmt.executeUpdate(update);
 			if(kind.equals("Y")){
-				out.println("정지되었습니다.");
+				out.println("수신허용되었습니다.");
 			} else {
-				out.println("해제되었습니다.");
+				out.println("수신거부되었습니다.");
 			}
 			
 			
@@ -32,7 +32,7 @@
 			out.println("SQLException: " + ex.getMessage());
 		} 
 	%>
-	<input type=button onclick="back()" value="되돌아가기">
+	<input type=button onclick="back()" value="닫기">
 </form>
 </body>
 </html>

@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<%@ include file="../jdbc_set.jsp" %>
+<%@ include file="../jsp_heid_set.jsp" %>
 <form name="check">
 	<%
 		String uId = request.getParameter("uId");
@@ -18,14 +18,14 @@
 		
 		try {
 			stmt = conn.createStatement();
-			String update = "UPDATE TBL_USER SET CNT = 0 WHERE U_ID = '" + uId + "'";
+			String update = "UPDATE YEO_TBL_USER SET CNT = 0 WHERE U_ID = '" + uId + "'";
 			stmt.executeUpdate(update);
 			out.println("초기화되었습니다.");
 			
 			
 			
 		} catch (SQLException ex) {
-			out.println("STUDENT 테이블 삽입이 실패했습니다.<br>");
+			out.println("YEO_TBL_USER 테이블 삽입이 실패했습니다.<br>");
 			out.println("SQLException: " + ex.getMessage());
 		} 
 	%>

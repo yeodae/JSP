@@ -16,7 +16,7 @@
 		String uName = (String) session.getAttribute("userName");
 		String uSt = (String) session.getAttribute("status");
 		out.println(uName + "님 환영합니다.");
-		out.println(uId);
+	
 		/* int mi = session.getMaxInactiveInterval() / 60;
 		out.println(mi + "분");
 		

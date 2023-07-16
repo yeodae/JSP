@@ -27,8 +27,6 @@
 			<th>연락처</th>
 			<th>반려동물이름</th>
 			<th>반려동물종류</th>
-			<th>방문기록</th>
-			<th>보유이용권</th>
 			<th>BlackList</th>
 			<th>차단여부</th>
 			<th>로그인차단</th>
@@ -54,10 +52,6 @@
 						= rs.getString("PET_NAME")  != null ? rs.getString("PET_NAME") : "-";
 					String pType
 						= rs.getString("PET_TYPE") != null ? rs.getString("PET_TYPE") : "-";
-					String visit
-						= rs.getString("VISIT") != null ? rs.getString("VISIT") : "첫방문";
-					String util
-						= rs.getString("UTIL") !=  null ? rs.getString("UTIL") : "미보유";
 					String banYn 
 						= rs.getString("BANYN").equals("Y") ? "정지" : "";
 					String btnYn
@@ -75,8 +69,6 @@
 				<td><%=phone%></td>
 				<td><%=pName%></td>
 				<td><%=pType%></td>
-				<td><%=visit%></td>
-				<td><%=util%></td>
 				<td style="color:red"><%=banYn%></td>
 				<td><input type="button" value="<%=btnYn%>" onclick="banChange('<%=rs.getString("BANYN")%>','<%=uId%>')"></td>
 				<td>

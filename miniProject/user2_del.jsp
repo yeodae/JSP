@@ -7,26 +7,27 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<%@ include file="../jdbc_set.jsp" %>
+	<%@ include file="../jsp_heid_set.jsp" %>
 <%
-		request.setCharacterEncoding("EUC-KR");
+		request.setCharacterEncoding("UTF-8");
 		String uId = request.getParameter("uId");
+		ResultSet rs = null;
 		Statement stmt = null;
 
 		try {
+			String select = "SELECT * FROM YEO_TBL_USER WHERE U_ID = '" + uId + "'";
 			stmt = conn.createStatement();
-			String select = "SELECT * FROM TBL_USER WHERE U_ID = '" + uId + "'";
-			ResultSet rs = stmt.executeQuery(select);
+			rs = stmt.executeQuery(select);
 			if(rs.next()){
 				if("Y".equals(rs.getString("BANYN"))){
-					String delete = "DELETE FROM TBL_USER WHERE U_ID = '" + uId + "'";
+					String delete = "DELETE FROM YEO_TBL_USER WHERE U_ID = '" + uId + "'";
 					stmt.executeUpdate(delete);
-					out.println("삭제 했습니다.");
+					out.println("정상적으로 삭제 했습니다.");
 				} else {
 					out.println("정지된 회원만 삭제할 수 있습니다.");
 				} 
 			} else {
-				out.println("해당 학생이 존재하지 않습니다.");
+				out.println("해당 고객이 존재하지 않습니다.");
 			}
 		} catch (SQLException ex) {
 			out.println("SQLException: " + ex.getMessage());

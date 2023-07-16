@@ -26,22 +26,23 @@
 			<th>보호자</th>
 			<th>연락처</th>
 			<th>이용권</th>
-			<th>방문기록</th>
-			<th>매출</th>
-			<th>이벤트수신여부</th>
+			<th>방문횟수</th>
+			<th>직전매출</th>
+			<th>총매출</th>
+			<th>알림톡수신여부</th>
+			<th>방문일지기록</th>
 			
 		</tr>
 		<%
 			ResultSet rs = null;
 			Statement stmt = null;
 			String uId = request.getParameter("uId");
+			
 			try {
-				String sql = "select * FROM YEO_TBL_USER Y INNER JOIN YEO_TBL_GUARDIAN G ON Y.U_NAME = G.U_NAME INNER JOIN YEO_TBL_PET P ON Y.PET_NAME = P.PET_NAME WHERE STATUS = 'U' AND U_ID = '"+uId+"' ORDER BY U_ID ASC";
+				String sql = "select * FROM YEO_TBL_USER Y INNER JOIN YEO_TBL_GUARDIAN G ON Y.U_NAME = G.U_NAME INNER JOIN YEO_TBL_PET P ON Y.PET_NAME = P.PET_NAME WHERE U_ID = '"+uId+"'";
 				stmt = conn.createStatement();
 				rs = stmt.executeQuery(sql);
 				while (rs.next()) {
-					uId = rs.getString("U_ID"); 
-					String pw = rs.getString("U_PW");
 					String uName = rs.getString("U_NAME");
 					String phone 
 						= rs.getString("PHONE") != null ? rs.getString("PHONE") : "-";
@@ -52,19 +53,15 @@
 					String visit
 						= rs.getString("VISIT") != null ? rs.getString("VISIT") : "첫방문";
 					String util
-						= rs.getString("UTIL") !=  null ? rs.getString("UTIL") : "미보유";
-					String banYn 
-						= rs.getString("BANYN").equals("Y") ? "정지" : "";
-					String btnYn
-						= rs.getString("BANYN").equals("Y") ? "해제" : "정지";
-					int cnt = rs.getInt("CNT"); 
+						= rs.getString("UTIL") != null ? rs.getString("UTIL") : "미보유";
 					String memo
 						= rs.getString("MEMO") != null ? rs.getString("MEMO") : "공백";
 					String sales
 						= rs.getString("SALES") != "0" ? rs.getString("SALES") : "0";
-					String event
-						= rs.getString("EVENT") != "Y" ? rs.getString("EVENT") : "N";
-					
+					String evtyn
+						= rs.getString("EVENT").equals("Y") ? "ON" : "OFF";
+					String ment
+						= rs.getString("MENT") != null ? rs.getString("MENT") : "없음";
 		%>
 			<tr>
 				
@@ -73,8 +70,10 @@
 				<td><%=phone%></td>
 				<td><%=util%></td>
 				<td><%=visit%></td>
-				<td><%=sales%></td>
-				<td><%=event%></td>
+				<td><%=sales%>원</td>
+				<td><%=rs.getInt("ALLSALES")%>원</td>
+				<td><input type="button" value="<%=evtyn%>" onclick="ynChange('<%=rs.getString("EVENT")%>','<%=uName%>')"></td>
+				<td><input type="button" value="기록하기" onclick="coco('<%=uName%>')"></td>
 			</tr>
 			
 		<%
@@ -104,15 +103,11 @@
 		</tr>
 		<%
 	
-			/* String uId = request.getParameter("uId");
-			out.println(uId); */
 			try {
-				String sql = "select * FROM YEO_TBL_USER Y INNER JOIN YEO_TBL_GUARDIAN G ON Y.U_NAME = G.U_NAME INNER JOIN YEO_TBL_PET P ON Y.PET_NAME = P.PET_NAME WHERE STATUS = 'U' AND U_ID = '"+uId+"'";
+				String sql = "select * FROM YEO_TBL_USER Y INNER JOIN YEO_TBL_GUARDIAN G ON Y.U_NAME = G.U_NAME INNER JOIN YEO_TBL_PET P ON Y.PET_NAME = P.PET_NAME WHERE U_ID = '"+uId+"'";
 				stmt = conn.createStatement();
 				rs = stmt.executeQuery(sql);
 				while (rs.next()) {
-					uId = rs.getString("U_ID");
-					String pw = rs.getString("U_PW");
 					String uName = rs.getString("U_NAME");
 					String phone 
 						= rs.getString("PHONE") != null ? rs.getString("PHONE") : "-";
@@ -136,47 +131,67 @@
 						= rs.getString("VISIT") != null ? rs.getString("VISIT") : "첫방문";
 					String util
 						= rs.getString("UTIL") !=  null ? rs.getString("UTIL") : "미보유";
-					String banYn 
-						= rs.getString("BANYN").equals("Y") ? "정지" : "";
-					String btnYn
-						= rs.getString("BANYN").equals("Y") ? "해제" : "정지";
 					int cnt = rs.getInt("CNT"); 
 					String memo
 						= rs.getString("MEMO") != null ? rs.getString("MEMO") : "공백";
 					String sales
-						= rs.getString("SALES") != "0" ? rs.getString("SALES") : "0";		
+						= rs.getString("SALES") != "0" ? rs.getString("SALES") : "0";
+					String ment
+						= rs.getString("MENT") != null ? rs.getString("MENT") : "없음";
+					String allment
+					= rs.getString("ALLMENT") != null ? rs.getString("ALLMENT") : "";
 		%>
 			<tr>
 				
 				<input type="radio" name="user" value="<%=uId%>" hidden>
+				<input type="radio" name="userName" value="<%=uName%>" hidden>
 				<td><%=pName%></td>
 				<td><%=pType%></td>
 				<td><%=pKind%></td>
 				<td><%=pGender%></td>
 				<td><%=pNeu%></td>
-				<td><%=age%></td>
+				<td><%=age%>살</td>
 				<td><%=pNo%></td>
-				<td><%=pHeight%></td>
+				<td><%=pHeight%>kg</td>
 				<td><%=memo%></td>
 			</tr>
-
-		<%
+			
+		<div>
+		<H3>미용일지</H3>
+		<p><%=allment%></p>
+		<%-- <%=(new java.util.Date()).toLocaleString()%> --%>
+		</div>
+		
+		<%String date = new java.util.Date().toLocaleString();
+		out.println(date);
 				}
+				
 			}catch (SQLException ex) {
 				out.println("Member 테이블 호출이 실패했습니다.<br>");
 				out.println("SQLException: " + ex.getMessage());
 			} 
 		%>
+	
 	</table>
 	
-	<input type = "button" name="PetAdd" value="반려견추가" onclick="PetAdd()">
-			
 	</div>
 	
 </form>
 </body>
 </html>
 <script>
+	function coco(uName){ // 기록일지 업데이트
+		var uName = document.list.userName.value;
+		window.open("guardian_update.jsp?uName="+uName,"방문일지기록"
+				,"width=500, height=500");
+	}
+	function ynChange(kind, uName){
+		if(kind == "N"){
+			kind = "Y";
+		}else{kind="N"}
+		window.open("guardian_ban.jsp?uName="+uName+"&kind="+kind,"popup"
+				,"width=100, height=100");
+	}
 	
 	function getReturn(){
 		location.reload();
