@@ -126,7 +126,7 @@
 			ResultSet rs = null;
 			Statement stmt = null;
 			
-			String uId = request.getParameter("uId");
+			uId = request.getParameter("uId");
 			try {
 				String sql = "select * from YEO_TBL_USER WHERE STATUS = 'U' ORDER BY U_ID ASC";
 				stmt = conn.createStatement();
@@ -204,7 +204,7 @@
 			kind = "Y";
 		}else{kind="N"}
 		window.open("user_ban.jsp?uId="+uId+"&kind="+kind,"popup"
-				,"width=500, height=500");
+				,"width=300, height=150");
 	}
 	function cntChange(uId){ // 로그인 시도횟수
 		window.open("user_cnt.jsp?uId="+uId,"popup"

@@ -62,16 +62,36 @@ header nav ul li:hover a:after {opacity:1;}
 	    	<img src="로고만.jpg" title="회사 로고" id="himg"/>
 	    	<nav>
 	    		<ul>
-	    			<li class="active"><a href="#">홈</a></li>
-	    			<li><a href="#">About</a></li>
-	    			<li><a href="#">Corporation</a></li>
-	    			<li><a href="join.jsp">회원가입</a></li>
-	    			<li><a href="login.jsp">로그인</a></li>
+	    			<li class="active"><a href="home.jsp">홈</a></li>
+	    			<li><a href="home2.jsp">About</a></li>
+	    			<li><a href="https://www.instagram.com/lunadog__official/" target="_blank">인스타그램</a></li>
+	    			<!-- <li><a href="join.jsp">회원가입</a></li> -->
+	    			<% 
+	    			String uId = (String) session.getAttribute("userId");
+	    				if(uId!=null){
+	    					%>
+	    					<li><a href="main.jsp">마이페이지</a></li>
+	    					<li><a href="login.jsp">로그아웃</a></li>
+	    					<%
+	    				}else if(uId==null){
+	    					session.setAttribute("uId",null);
+	    					session.setMaxInactiveInterval(0);
+	    					response.sendRedirect("header2.jsp");
+	    					%>
+	    					<li><a href="join.jsp">회원가입</a></li>
+	    					<li><a href="login.jsp">로그인</a></li>
+	    					<%
+	    				}			
+	    			%>
+	    			<!-- <li><a href="login.jsp">로그인</a></li> -->
 	    		</ul>
 	    	</nav>
     	</div>
     </header>
-
-
 </body>
 </html>
+<script>
+	function getReturn(){
+		location.reload();
+	}
+</script>

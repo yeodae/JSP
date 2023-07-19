@@ -40,6 +40,7 @@
             
             min-height: calc(100% - 120px);
             margin-top:150px;
+            font-size:15px;
         }
 		form input {
             background: #eee;
@@ -76,7 +77,7 @@
 	<%@ include file="header2.jsp" %>
 	<%
 		
-		String uId = (String) session.getAttribute("userId");
+		/* String uId = (String) session.getAttribute("userId"); */
 		String uName = (String) session.getAttribute("userName");
 		String uSt = (String) session.getAttribute("status");
 	
@@ -87,25 +88,31 @@
 		mi = session.getMaxInactiveInterval() / 60;
 		out.println(mi + "분"); */
 		
-		/* String uId = (String) session.getAttribute("userId");
-		out.println(uId); */
+	 	/* String uId = (String) session.getAttribute("userId"); */
+	/* 	out.println(uId); */
 		
 		
 	%>
 	<input type="text" name="user" value="<%=uId%>" hidden>
-	
+	<span style="font-size:15px"><div><strong><%=uName%></strong>님 환영합니다!</div></span>
 	<%
 	if(uSt.equals("A")){%>
-	<input type="button" value="관리자화면으로 이동" onclick="admin()">
+	<div><input type="button" value="예약관리" onclick="reserve()"></div>
+	<div><input type="button" value="회원관리" onclick="admin()"></div>
 	<%}%>
-	<span style="font-size:15px"><div><strong><%=uName%></strong>님 환영합니다!</div></span>
+	<% 
+	if(uSt.equals("U")){%>
 	<div>
 		<input type="button" value="MY예약확인" onclick="user_reserve()">
 		</div>
 	<div>
+		<input type="button" value="미용요금표" onclick="price()">
+		</div>
+	<div>
 		<input type="button" value="반려동물 정보 입력" onclick="petUpd('<%=uId%>')">
 		</div>
-	<input type="button" value="로그아웃" onclick="logout()" class="find">
+	<%}%>
+	<div><input type="button" value="로그아웃" onclick="logout()" class="find"></div>
 	</form>
 	</div>
 	 <footer><jsp:include page="footer2.jsp"/></footer>
@@ -120,6 +127,12 @@
 		form.submit();
 	}
 
+	function price(){
+		window.open("price.jsp","price"
+				,"width=1000, height=900");
+		var form = document.pet;
+		form.submit();
+	}
 	function logout(){
 		location.href="login.jsp";
 	}
@@ -131,5 +144,12 @@
 		var form = document.pet;
 		form.submit();
 	}
-	
+	function reserve(){
+		var form = document.pet;
+		location.href = "reserve.jsp?uId=" + form.user.value;
+	}
+	function admin(){
+		location.href="user2.jsp";
+	}
+
 	</script>

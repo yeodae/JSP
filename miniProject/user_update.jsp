@@ -110,20 +110,26 @@
 				<div>연락처&nbsp;: <input name="phone" type="text" value="<%= phone %>"></div>
 				<div>반려동물명 : <input name="pName" type="text" value="<%= pName %>"></div>
 				<div>메모 : <input name="memo" type="text" value="<%= memo %>"></div>
-				
+				<input type="submit" onclick="userUpdate()" value="변경">
 				<%
-			}
-			
+			}else {
+				out.println("해당 고객이 존재하지 않습니다.");
+				%>
+				<div><input type="button" onclick="back()" value="되돌아가기"></div>
+				<%
+				}
 			}catch(SQLException e){
 			out.println(e.getMessage());
 		}
-		
 	%>
-	<input type="submit" onclick="userUpdate()" value="변경">
+	
 </form>
 </div>
 </body>
 </html>
 <script>
-
+function back(){
+	window.close();
+	window.opener.getReturn();
+}
 </script>

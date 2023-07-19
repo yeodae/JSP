@@ -73,7 +73,7 @@
 <img src="로고2.jpg" id="logoBox">
 <%@ include file="header2.jsp" %>
 	<%
-		String uId = (String) session.getAttribute("userId");
+		uId = (String) session.getAttribute("userId");
 		String uName = (String) session.getAttribute("userName");
 		String uSt = (String) session.getAttribute("status");
 		
@@ -92,7 +92,7 @@
 	<span style="font-size:15px"><div><strong><%=uName%></strong>님 환영합니다!</div></span>
 	<br>
 	<input type="button" value="예약관리" onclick="reserve()">
-	<input type="button" value="관리자화면으로 이동" onclick="admin()">
+	<input type="button" value="회원관리" onclick="admin()">
 	<%}%>
 	<input type="button" value="로그아웃" onclick="logout()">
 	</div>

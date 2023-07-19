@@ -127,7 +127,7 @@
 		<%
 			ResultSet rs = null;
 			Statement stmt = null;
-			String uId = request.getParameter("uId");
+			uId = request.getParameter("uId");
 			
 			try {
 				String sql = "select * FROM YEO_TBL_USER Y INNER JOIN YEO_TBL_GUARDIAN G ON Y.U_NAME = G.U_NAME INNER JOIN YEO_TBL_PET P ON Y.PET_NAME = P.PET_NAME WHERE U_ID = '"+uId+"'";
@@ -281,7 +281,7 @@
 			kind = "Y";
 		}else{kind="N"}
 		window.open("guardian_ban.jsp?uName="+uName+"&kind="+kind,"popup"
-				,"width=100, height=100");
+				,"width=300, height=150");
 	}
 	
 	function getReturn(){

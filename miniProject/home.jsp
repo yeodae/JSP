@@ -23,21 +23,20 @@
              margin-top: 130px;
         }
         #Lcontainer{
-            width: 300px;
+        	width: 1920px;
             border: 1px solid white;
             text-align: center;
             margin: 0 auto; 
-            display: flex;
+           
             justify-content: center;
             align-items: center;
             border-radius: 10px;
             box-shadow: -5px -5px 10px #fff, 5px 5px 30px
 
             #babebc;
-            width: 400px;
-            min-height: 480px;
             overflow: hidden;
             font-size:15px;
+           
         }
         #Limg{
             margin: 5px auto;
@@ -110,6 +109,11 @@
 			margin: 0 auto;
 			margin-top: 100px;
 			}
+		.box1{
+			float:left;
+			margin : 0 auto;
+			display:block;
+		}
         
     </style>
 </head>
@@ -117,41 +121,28 @@
 <body id="Lbody">
 	<jsp:include page="header2.jsp"/>
 	<%-- <%@ include file="header2.jsp" %> --%>
-	<%
-		/* session.removeAttribute("userId");
-		session.removeAttribute("userName"); */
-		/* session.invalidate(); */
-		if(request.isRequestedSessionIdValid()){
-			/* out.println("청소중"); */
-			session.invalidate();
-			response.sendRedirect("login.jsp");
-		}
-		
-		/* String uId = (String) session.getAttribute("userId");
-		out.println(uId); */
-		
-		
-	%>
 	<div id="Lcontainer">
-	<form action="check.jsp">
-		<img src="로고2.jpg" id="logoBox">
-        <div>
-			<input id="u" type="radio" name="status" value="U" checked>
-            <label for="u">일반회원</label>
-			<input id="a" type="radio" name="status" value="A">
-            <label for="a">관리자</label>
+		<div class="box1">
+			<img src="홈메인.PNG">
 		</div>
-		<div>
-            <input placeholder="ID" name="uId">
-        </div>
-		<div>
-            <input placeholder="Password" type="password" name="pwd">
-        </div>
-		
-		<div><input class="submit" type="submit" value="로그인"></div>
-		<div id="idbox" class="find"><a href="findId.jsp">아이디 찾기</a></div>
-		<div id="pwbox" class="find"><a href="findpw.jsp">비밀번호 찾기</a></div>
-	</form>
+		<a href="login.jsp">
+		<div class="box1">
+			<img src="홈2.PNG">
+		</div>
+		</a>
+		<div class="box1">
+			<img src="홈메인2.PNG">
+		</div>
+		<div class="box1">
+			<img src="홈메인3.PNG">
+		</div>
+		<div class="box1">
+			<img src="홈메인4.PNG">
+		</div>
+		<div class="box1">
+			<img src="홈메인5.PNG">
+		</div>
+
 	</div>
 	<%-- <%@ include file="footer.jsp" %> --%>
 	<footer><%@ include file="footer2.jsp" %></footer>
